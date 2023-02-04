@@ -6,37 +6,17 @@ const ExpenseForm = (props:any) => {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredAmount, setEnteredAmount] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
-  // const [userInput, setUserInput] = useState({
-  //   enteredTitle: '',
-  //   enteredAmount: '',
-  //   enteredDate: '',
-  // });
 
   const titleChangeHandler = (event:any) => {
     setEnteredTitle(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredTitle: event.target.value,
-    // });
-    // setUserInput((prevState) => {
-    //   return { ...prevState, enteredTitle: event.target.value };
-    // });
   };
 
   const amountChangeHandler = (event:any) => {
     setEnteredAmount(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredAmount: event.target.value,
-    // });
   };
 
   const dateChangeHandler = (event:any) => {
     setEnteredDate(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredDate: event.target.value,
-    // });
   };
 
   const submitHandler = (event:any) => {
@@ -44,15 +24,23 @@ const ExpenseForm = (props:any) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
     props.onSaveExpenseData(expenseData);
+    props.changeFormStatus();
     setEnteredTitle('');
     setEnteredAmount('');
     setEnteredDate('');
   };
+
+  const cancelHandler = () => {
+    props.changeFormStatus();
+    setEnteredTitle('');
+    setEnteredAmount('');
+    setEnteredDate('');
+  }
 
   return (
     <form onSubmit={submitHandler}>
@@ -87,6 +75,7 @@ const ExpenseForm = (props:any) => {
         </div>
       </div>
       <div className='new-expense__actions'>
+        <button onClick={cancelHandler} type={'button'}>Cancel</button>
         <button type='submit'>Add Expense</button>
       </div>
     </form>
